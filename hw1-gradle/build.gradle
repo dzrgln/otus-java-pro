@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+    id("com.github.johnrengelman.shadow") version "7.1.0"
+}
+
+version '1'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    implementation 'com.google.guava:guava:19.0'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'ru.otus.hw1.gradle.Main'
+        )
+    }
+}
