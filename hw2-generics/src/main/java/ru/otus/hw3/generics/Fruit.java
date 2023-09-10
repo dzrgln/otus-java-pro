@@ -1,4 +1,4 @@
-package ru.otus.hw2.generics;
+package ru.otus.hw3.generics;
 
 public class Fruit {
     private final double weight;

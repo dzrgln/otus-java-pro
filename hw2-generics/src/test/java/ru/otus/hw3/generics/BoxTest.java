@@ -1,4 +1,4 @@
-package ru.otus.hw2.generics;
+package ru.otus.hw3.generics;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -65,11 +65,28 @@ public class BoxTest {
     }
 
     @Test
+    public void testPouringFromNull(){
+        Box<Apple> nullBox = null;
+        assertThrows(NullPointerException.class, () -> appleBox1.pour(nullBox));
+    }
+
+    @Test
+    public void testPouringFromSameBox(){
+        assertThrows(IllegalArgumentException.class, () -> appleBox1.pour(appleBox1));
+    }
+
+    @Test
     public void testComparing(){
         Box<Apple> sameAppleBox1 = new Box<>();
         sameAppleBox1.add(new Apple(7));
 
         assertTrue(appleBox1.compare(sameAppleBox1));
         assertFalse(appleBox1.compare(appleBox2));
+    }
+
+    @Test
+    public void testComparingWithNull(){
+        Box<Apple> nullBox = null;
+        assertThrows(NullPointerException.class, () -> appleBox1.compare(nullBox));
     }
 }
