@@ -72,7 +72,8 @@ public class BoxTest {
 
     @Test
     public void testPouringFromSameBox(){
-        assertThrows(IllegalArgumentException.class, () -> appleBox1.pour(appleBox1));
+        appleBox1.pour(appleBox1);
+        assertEquals(3, appleBox1.size());
     }
 
     @Test

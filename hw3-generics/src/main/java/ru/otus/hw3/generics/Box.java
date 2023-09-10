@@ -26,7 +26,7 @@ public class Box<T extends Fruit> {
 
     public void pour(@NotNull Box<T> anotherBox) {
         if (anotherBox.equals(this)) {
-            throw new IllegalArgumentException();
+            return;
         }
         fruits.addAll(anotherBox.fruits);
         anotherBox.clear();
@@ -34,10 +34,5 @@ public class Box<T extends Fruit> {
 
     public boolean compare(@NotNull Box<? extends Fruit> anotherBox) {
         return Math.abs(weight() - anotherBox.weight()) < 0.001;
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
     }
 }
