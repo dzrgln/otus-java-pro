@@ -4,7 +4,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Box<T extends Fruit> {
     private final List<T> fruits = new ArrayList<>();
