@@ -59,7 +59,10 @@ public class TestRunner {
     private static void printTestStatistic(TestState testState) {
         int allTests = testState.testsMethods.size();
         int successfulTests = allTests - testState.failedTests;
-        System.out.printf("Тестов пройдено %d/%d%n", successfulTests, allTests);
+
+        System.out.printf("Всего тестов %d: \n", allTests);
+        System.out.printf("Тестов пройдено: %d \n", successfulTests);
+        System.out.printf("Тестов упало %d: \n", testState.failedTests);
     }
 
     private static void validateAnnotations(Method method) {
