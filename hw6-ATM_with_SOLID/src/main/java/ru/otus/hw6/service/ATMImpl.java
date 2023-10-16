@@ -13,8 +13,8 @@ public class ATMImpl implements ATM{
     }
 
     @Override
-    public void getAvailableSum() {
-        System.out.println("Доступно для снятия " + banknoteStorage.getAvailableSum() + " ₽");
+    public int getAvailableSum() {
+        return banknoteStorage.getAvailableSum();
     }
 
     @Override
@@ -24,12 +24,12 @@ public class ATMImpl implements ATM{
     }
 
     @Override
-    public void withdrawMoney(int quantityOfMoney) {
+    public Map<Banknote, Integer> withdrawMoney(int quantityOfMoney) {
         Map<Banknote, Integer> result = banknoteStorage.withdrawMoney(quantityOfMoney);
         if (result.isEmpty()) {
             throw new IllegalArgumentException("Запрашиваемая сумма больше доступной");
         } else {
-            System.out.println("Готово к выдаче " + result);
+            return result;
         }
     }
 }

@@ -10,8 +10,7 @@ import ru.otus.hw6.service.ATMImpl;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static ru.otus.hw6.model.Banknote.FIVE_THOUSAND;
-import static ru.otus.hw6.model.Banknote.ONE_HUNDRED;
+import static ru.otus.hw6.model.Banknote.*;
 
 public class Main {
 
@@ -20,20 +19,19 @@ public class Main {
         BanknoteStorage banknoteStorage = new InMemoryBanknoteStorageImpl(cashMachine);
         ATM atm = new ATMImpl(banknoteStorage);
 
-        System.out.println("До пополнения");
+        System.out.printf("До пополнения %s \n", atm.getAvailableSum());
         atm.getAvailableSum();
 
         atm.putMoney(Map.of(
                 FIVE_THOUSAND, 2,
                 ONE_HUNDRED, 1
         ));
+        System.out.printf("После пополнения %s \n", atm.getAvailableSum());
 
-        System.out.println("После пополнения");
-        atm.getAvailableSum();
-
+        System.out.println("Снимаем 12550");
         atm.withdrawMoney(12550);
 
-        System.out.println("После снятия");
+        System.out.printf("После снятия %s \n", atm.getAvailableSum());
         atm.getAvailableSum();
 
         TimeUnit.SECONDS.sleep(10);

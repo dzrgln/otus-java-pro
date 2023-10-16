@@ -5,9 +5,9 @@ import ru.otus.hw6.model.Banknote;
 import java.util.Map;
 
 public interface ATM {
-    void getAvailableSum();
+    int getAvailableSum();
 
     void putMoney(Map<Banknote, Integer> money);
 
-    void withdrawMoney(int quantityOfMoney);
+    Map<Banknote, Integer> withdrawMoney(int quantityOfMoney);
 }
