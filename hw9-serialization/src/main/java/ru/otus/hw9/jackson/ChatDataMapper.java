@@ -10,14 +10,13 @@ import ru.otus.hw9.model.source.SmsData;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ChatDataMapper {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss");
 
     public static ChatData of(SmsData smsData) {
         ChatData chatData = new ChatData();
-        Map<String, ChatInfo> chatDataMap = chatData.getChatData();
+        Map<String, ChatInfo> chatDataMap = chatData.getChatDataMap();
         for(ChatSession chatSession: smsData.getChatSessions()) {
             ChatInfo.ChatInfoBuilder chatInfoBuilder = ChatInfo.builder()
                     .chatIdentifier(chatSession.getChatIdentifier())
@@ -39,7 +38,7 @@ public class ChatDataMapper {
                     }
                     List<MessageInfo> sortedMessageInfos = messageInfos.stream()
                             .sorted(Comparator.comparing(MessageInfo::getSendDate))
-                            .collect(Collectors.toList());
+                            .toList();
                     chatInfoBuilder.messageInfos(sortedMessageInfos);
                     chatDataMap.put("_" + belongNumber.substring(1), chatInfoBuilder.build());
                 }

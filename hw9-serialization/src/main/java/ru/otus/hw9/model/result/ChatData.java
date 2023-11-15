@@ -9,12 +9,12 @@ import java.util.Map;
 @Getter
 @Setter
 public class ChatData {
-    private final Map<String, ChatInfo> chatData = new HashMap<>();
+    private final Map<String, ChatInfo> chatDataMap = new HashMap<>();
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for(Map.Entry<String, ChatInfo> entry: chatData.entrySet()) {
+        for(Map.Entry<String, ChatInfo> entry: chatDataMap.entrySet()) {
             sb.append(entry.getKey());
             sb.append(" - ");
             sb.append(entry.getValue().toString());

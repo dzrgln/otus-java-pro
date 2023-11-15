@@ -1,9 +1,7 @@
 package ru.otus.hw9.jackson;
 
-import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.fasterxml.jackson.dataformat.xml.deser.FromXmlParser;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 public class SerializerFactory {

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.yaml.snakeyaml.Yaml;
 import ru.otus.hw9.model.result.ChatData;
 import ru.otus.hw9.model.result.ChatInfo;
@@ -12,15 +14,16 @@ import ru.otus.hw9.model.source.SmsData;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.List;
 import java.util.Map;
 
 public class Main {
-    public static void main(String[] args) throws Exception{
+    static Log log = LogFactory.getLog(Main.class);
+
+    public static void main(String[] args) throws Exception {
         ObjectMapper jsonMapper = SerializerFactory.getJsonSerializer();
 
         //Десериализуем и выводим результат в консоль
-        File smsFile = new File("D:\\dev\\ru.otus.java.pro\\hw9-serialization\\sms.json");
+        File smsFile = new File("hw9-serialization/sms.json");
         SmsData smsData = jsonMapper.readValue(smsFile, SmsData.class);
         print("Данные из исходного файла", smsData.toString());
 
@@ -31,10 +34,10 @@ public class Main {
         //Сереализуем в json
         String jsonFilePath = "output.json";
         jsonMapper.writeValue(new File(jsonFilePath), chatData);
-        System.out.println("Данные успешно сериализованы в JSON в файл " + jsonFilePath);
+        log.info("Данные успешно сериализованы в JSON в файл " + jsonFilePath);
 
         //Десериализуем из json'a
-        System.out.println("Данные успешно десериализованы из json");
+        log.info("Данные успешно десериализованы из json");
         ChatData chatDataFromJson = jsonMapper.readValue(new File(jsonFilePath), ChatData.class);
         print("Новая структура данных в json", chatDataFromJson.toString());
 
@@ -42,10 +45,10 @@ public class Main {
         XmlMapper xmlMapper = SerializerFactory.getXmlSerializer();
         String xmlFilePath = "output.xml";
         xmlMapper.writeValue(new File(xmlFilePath), chatData);
-        System.out.println("Данные успешно сериализованы в XML в файл " + xmlFilePath);
+        log.info("Данные успешно сериализованы в XML в файл " + xmlFilePath);
 
         //Десирализуем из XML
-        System.out.println("Данные успешно десериализованы из xml");
+        log.info("Данные успешно десериализованы из xml");
         ChatData chatDataFromXml = xmlMapper.readValue(new File(xmlFilePath), ChatData.class);
         print("Новая структура данных в XML", chatDataFromXml.toString());
 
@@ -53,8 +56,8 @@ public class Main {
         // Сериализуем в CSV
         String csvFilePath = "output.csv";
         FileWriter writer = new FileWriter(csvFilePath);
-        try (CSVWriter csvWriter = new CSVWriter(writer)){
-            for (Map.Entry<String, ChatInfo> entry: chatData.getChatData().entrySet()) {
+        try (CSVWriter csvWriter = new CSVWriter(writer)) {
+            for (Map.Entry<String, ChatInfo> entry : chatData.getChatDataMap().entrySet()) {
                 ChatInfo value = entry.getValue();
                 String[] data = {
                         value.getChatIdentifier(),
@@ -65,13 +68,13 @@ public class Main {
                 csvWriter.writeNext(data);
             }
         }
-        System.out.println("Данные успешно сериализованы в файл " + csvFilePath);
+        log.info("Данные успешно сериализованы в файл " + csvFilePath);
 
         //Десериализуем из CSV
         String[] chatDataArray;
-        try (CSVReader csvReader = new CSVReader(new FileReader(csvFilePath))){
+        try (CSVReader csvReader = new CSVReader(new FileReader(csvFilePath))) {
             // Читаем данные
-            System.out.println("Данные, прочитанные из csv");
+            log.info("Данные, прочитанные из csv");
             while ((chatDataArray = csvReader.readNext()) != null) {
                 String chatIdentifier = chatDataArray[1];
                 String belongNumber = chatDataArray[0];
@@ -79,26 +82,25 @@ public class Main {
                 String message = chatDataArray[3];
 
 
-                System.out.println("Chat Identifier: " + chatIdentifier);
-                System.out.println("Belong Number: " + belongNumber);
-                System.out.println("Last: " + memberLast);
-                System.out.println("Send Date + text: " + message);
-                System.out.println();
+                log.info("Chat Identifier: " + chatIdentifier);
+                log.info("Belong Number: " + belongNumber);
+                log.info("Last: " + memberLast);
+                log.info("Send Date + text: " + message);
             }
         }
 
         // Сериализуем в YAML
         Yaml yaml = new Yaml();
-        String yamlChatData = yaml.dump(chatData.getChatData());
+        String yamlChatData = yaml.dump(chatData.getChatDataMap());
         String yamlFilePath = "output.yaml";
         try (FileWriter writer1 = new FileWriter(yamlFilePath)) {
             writer1.write(yamlChatData);
         }
 
         // Десериализуем из YAML
-        try (CSVReader csvReader = new CSVReader(new FileReader(csvFilePath))){
+        try (CSVReader csvReader = new CSVReader(new FileReader(csvFilePath))) {
             // Читаем данные
-            System.out.println("Данные, прочитанные из csv");
+            log.info("Данные, прочитанные из csv");
             while ((chatDataArray = csvReader.readNext()) != null) {
                 String chatIdentifier = chatDataArray[1];
                 String belongNumber = chatDataArray[0];
@@ -106,11 +108,10 @@ public class Main {
                 String message = chatDataArray[3];
 
 
-                System.out.println("Chat Identifier: " + chatIdentifier);
-                System.out.println("Belong Number: " + belongNumber);
-                System.out.println("Last: " + memberLast);
-                System.out.println("Send Date + text: " + message);
-                System.out.println();
+                log.info("Chat Identifier: " + chatIdentifier);
+                log.info("Belong Number: " + belongNumber);
+                log.info("Last: " + memberLast);
+                log.info("Send Date + text: " + message);
             }
         }
 
@@ -118,10 +119,9 @@ public class Main {
 
 
     private static void print(String title, String str) {
-        System.out.println("----------- " + title + " -----------------");
-        System.out.println(str);
-        System.out.println("--------------------------------------------------------");
-        System.out.println();
+        log.info("----------- " + title + " -----------------");
+        log.info(str);
+        log.info("--------------------------------------------------------");
     }
 
 
