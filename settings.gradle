@@ -4,4 +4,7 @@ include 'hw3-generics'
 include 'hw5-test_framework'
 include 'hw6-ATM_with_SOLID'
 include 'hw9-serialization'
+include 'hw10-JDBC'
+include 'hw10-JDBC:demo'
+include 'hw10-JDBC:homework'
 
