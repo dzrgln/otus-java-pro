@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import ru.otus.atm.cashmachine.CashMachine;
 import ru.otus.atm.model.Banknote;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 @Repository
@@ -35,8 +35,8 @@ public class InMemoryBanknoteStorageImpl implements BanknoteStorage {
 
     @Override
     public void putMoney(Map<Banknote, Integer> money) {
-        for(Map.Entry<Banknote, Integer> entry: money.entrySet()) {
-            banknoteStorage.computeIfPresent(entry.getKey(), (K,v) -> v + entry.getValue());
+        for (Map.Entry<Banknote, Integer> entry : money.entrySet()) {
+            banknoteStorage.computeIfPresent(entry.getKey(), (k, v) -> v + entry.getValue());
         }
     }
 
@@ -46,7 +46,7 @@ public class InMemoryBanknoteStorageImpl implements BanknoteStorage {
     }
 
     private Map<Banknote, Integer> createStorage() {
-        Map<Banknote, Integer> res = new HashMap<>();
+        Map<Banknote, Integer> res = new EnumMap<>(Banknote.class);
         for (Banknote banknote : Banknote.values()) {
             res.put(banknote, 100);
         }
